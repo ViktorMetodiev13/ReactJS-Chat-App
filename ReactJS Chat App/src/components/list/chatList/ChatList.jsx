@@ -16,7 +16,11 @@ export const ChatList = () => {
                     <input type="text" className='searchInput' placeholder='Search' />
                 </div>
 
-                <img src={addMode ? "./minus.png" : "./plus.png"} alt="add" className="addPerson icon" onClick={showUsersList} />
+                <img
+                    src={addMode ? "./minus.png" : "./plus.png"}
+                    alt="add" className="addPerson icon"
+                    onClick={showUsersList}
+                />
             </div>
 
             {addMode ? <div className='users'>
@@ -27,83 +31,6 @@ export const ChatList = () => {
                     <p className="latestMessage">Hello</p>
                 </div>
             </div> : ""}
-
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
-            <div className='users'>
-                <img src="./avatar.png" alt="user image" className="userImage" />
-
-                <div className="userBriefInfo">
-                    <span className="username">Maria Neison</span>
-                    <p className="latestMessage">Hello</p>
-                </div>
-            </div>
         </div>
     )
 }

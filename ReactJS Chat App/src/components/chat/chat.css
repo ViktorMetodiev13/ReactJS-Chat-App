@@ -1,4 +1,125 @@
+/* Component Configurations */
+
 .chat {
     flex: 2;
     border-right: 1px solid rgba(255,255,255,.25);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Heading */
+
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 20px 22px;
+    position: sticky;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+}
+
+.heading-user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.heading-avatar {
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+}
+
+.heading-userInfomation {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.heading-username {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.heading-status {
+    font-weight: 100;
+    font-size: 14px;
+    color: #a5a5a5;
+}
+
+.heading-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.heading-phone-icon,
+.heading-video-icon,
+.heading-info-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* footer */
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 0px;
+}
+
+.footer-icons {
+    padding-left: 24px;
+    display: flex;
+    gap: 24px;
+}
+
+.footer-img-icon,
+.footer-camera-icon,
+.footer-mic-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.footer-input-field {
+    flex: 1;
+    border-radius: 12px;
+    border: none;
+    padding: 20px 16px;
+    background-color: rgba(17, 25, 40, 0.5);
+    font-size: 18px;
+    color: #fff;
+}
+
+.footer-emojis-send-span {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.footer-emoji {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.footer-emoji-menu {
+    position: absolute;
+    bottom: 50px;
+    left: 0px;
+}
+
+.footer-send-button {
+    padding: 12px 18px;
+    background-color: #5183fe;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 20px;
+    color: #fff;
 }
