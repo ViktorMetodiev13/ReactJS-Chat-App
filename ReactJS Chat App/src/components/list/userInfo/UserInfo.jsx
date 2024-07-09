@@ -5,7 +5,7 @@ export const UserInfo = () => {
         <div className="userInfo">
             <div className="user">
                 <img src="./avatar.png" alt="user image" className="avatar" />
-                <h2 className='userName'>John Smith</h2>
+                <h2 className='username'>John Smith</h2>
             </div>
 
             <div className="icons">
