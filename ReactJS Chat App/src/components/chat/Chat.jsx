@@ -39,7 +39,60 @@ export const Chat = () => {
                 </div>
             </div>
 
-            <div className="main"></div>
+            <div className="main">
+                <div className="main-message">
+                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
+
+                    <div className="main-message-params">
+                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+
+                <div className="main-message-own">
+                    <div className="main-message-params">
+                        <img src="./theme.png" alt="image message" />
+                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+
+                <div className="main-message">
+                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
+                    <div className="main-message-params">
+                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+
+                <div className="main-message-own">
+                    <div className="main-message-params">
+                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+
+                <div className="main-message">
+                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
+                    <div className="main-message-params">
+                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+
+                <div className="main-message-own">
+                    <div className="main-message-params">
+                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                            sapiente error nesciunt voluptate quis expedita?</p>
+                        <span className="main-date">1 min ago</span>
+                    </div>
+                </div>
+            </div>
 
             <div className="footer">
                 <div className="footer-icons">
