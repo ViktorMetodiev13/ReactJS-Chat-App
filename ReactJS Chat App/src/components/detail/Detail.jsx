@@ -1,4 +1,4 @@
-import './detail.css'
+import './detail.css';
 
 import { useState } from "react";
 
