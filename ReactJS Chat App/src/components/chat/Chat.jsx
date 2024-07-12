@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './chat.css'
 
 import EmojiPicker from 'emoji-picker-react'
@@ -7,13 +7,17 @@ export const Chat = () => {
     const [emojisMenu, setEmojisMenu] = useState(false);
     const [textField, setTextField] = useState();
 
+    const endRef = useRef(null);
+    useEffect(() => {
+        endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [])
+
     const onUserClick = () => {
         setEmojisMenu(!emojisMenu);
     };
 
     const onEmojiAddHandler = (e) => {
         setTextField(state => state + e.emoji);
-        // setEmojisMenu(false);
     };
 
     const onChangeHandler = (e) => {
@@ -70,7 +74,7 @@ export const Chat = () => {
 
                 <div className="main-message-own">
                     <div className="main-message-params">
-                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
                             sapiente error nesciunt voluptate quis expedita?</p>
                         <span className="main-date">1 min ago</span>
                     </div>
@@ -87,11 +91,12 @@ export const Chat = () => {
 
                 <div className="main-message-own">
                     <div className="main-message-params">
-                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
+                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
                             sapiente error nesciunt voluptate quis expedita?</p>
                         <span className="main-date">1 min ago</span>
                     </div>
                 </div>
+                <div ref={endRef}></div>
             </div>
 
             <div className="footer">
