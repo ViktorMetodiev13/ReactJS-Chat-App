@@ -23,3 +23,19 @@
 .register-avatar a {
     color: #fff;
 }
+
+.register-upload-avatar-field {
+    display: none;
+    cursor: pointer;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-decoration: underline;
+}
+
+.upload-avatar-text {
+    cursor: pointer;
+}
