@@ -31,8 +31,8 @@ export const Register = () => {
         <div className="register">
             <h2 className="login-title">Create an Account</h2>
 
-            <form onSubmit={onRegisterSubmit}>
-                <label htmlFor="file">
+            <form className="register-form" onSubmit={onRegisterSubmit}>
+                <label htmlFor="file" className="register-upload-avatar-label">
                     <img
                         src={avatar.url || "./avatar.png"}
                         alt="avatar png"
