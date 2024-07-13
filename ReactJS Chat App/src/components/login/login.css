@@ -29,9 +29,10 @@ input {
 }
 
 .sign-in {
-    background-color: #5183fe;
+    background-color: #1f8ef1;
     border: none;
     color: #fff;
     padding: 20px;
     border-radius: 6px;
+    cursor: pointer;
 }
