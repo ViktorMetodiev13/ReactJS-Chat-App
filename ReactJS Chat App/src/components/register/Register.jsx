@@ -1,5 +1,7 @@
 import "./register.css";
 
+import { toast } from 'react-toastify';
+
 import { useState } from "react";
 
 export const Register = () => {
@@ -17,11 +19,19 @@ export const Register = () => {
         }
     };
 
+    const onRegisterSubmit = (e) => {
+        e.preventDefault();
+
+        console.log('clicked!');
+
+        toast.success("Registered Successfully!");
+    };
+
     return (
         <div className="register">
             <h2 className="login-title">Create an Account</h2>
 
-            <form action="POST" >
+            <form onSubmit={onRegisterSubmit}>
                 <label htmlFor="file">
                     <img
                         src={avatar.url || "./avatar.png"}
@@ -31,7 +41,7 @@ export const Register = () => {
                     <span className="upload-avatar-text">Upload an avatar</span>
                 </label>
                 <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar} />
-                <input type="text" placeholder='username' className='username' />
+                <input type="text" placeholder='username' className='register-username' />
                 <input type="text" placeholder='Email' className='email' />
                 <input type="password" placeholder='Password' className='password' />
                 <button className="sign-up">Sign Up</button>

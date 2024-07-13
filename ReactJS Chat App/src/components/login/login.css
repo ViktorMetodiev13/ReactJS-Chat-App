@@ -19,7 +19,9 @@ form {
     gap: 20px;
 }
 
-input {
+.email,
+.password,
+.register-username {
     padding: 22px 26px;
     color: #fff;
     background-color: rgba(17, 25, 40, 0.5);
