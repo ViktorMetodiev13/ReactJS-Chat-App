@@ -17,7 +17,10 @@ const App = () => {
                     <Detail />
                 </>
                 :
-                <Login />
+                <>
+                    <Login />
+                    <Register />
+                </>
             }
         </div>
     )
