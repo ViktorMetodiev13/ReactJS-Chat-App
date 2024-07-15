@@ -29,6 +29,8 @@ export const Register = () => {
     const onRegisterSubmit = async (e) => {
         e.preventDefault();
 
+        console.log(e);
+
         setLoading(true);
 
         const formData = new FormData(e.target);
