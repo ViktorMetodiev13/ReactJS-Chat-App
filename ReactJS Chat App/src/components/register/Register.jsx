@@ -29,8 +29,6 @@ export const Register = () => {
     const onRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(e);
-
         setLoading(true);
 
         const formData = new FormData(e.target);
@@ -56,7 +54,6 @@ export const Register = () => {
 
             toast.success("Account created!");
         } catch (error) {
-            console.log(error);
             toast.error(error.message);
         } finally {
             setLoading(false);
