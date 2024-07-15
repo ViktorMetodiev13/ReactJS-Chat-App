@@ -1,5 +1,10 @@
 import "./register.css";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../configs/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { upload } from "../../configs/upload";
+
 import { toast } from 'react-toastify';
 
 import { useState } from "react";
@@ -10,6 +15,8 @@ export const Register = () => {
         url: "",
     });
 
+    const [loading, setLoading] = useState(false);
+
     const handleAvatar = (e) => {
         if (e.target.files[0]) {
             setAvatar({
@@ -19,12 +26,39 @@ export const Register = () => {
         }
     };
 
-    const onRegisterSubmit = (e) => {
+    const onRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('clicked!');
+        setLoading(true);
 
-        toast.success("Registered Successfully!");
+        const formData = new FormData(e.target);
+
+        const { username, email, password } = Object.fromEntries(formData);
+
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+
+            const imgUrl = await upload(avatar.file);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                id: res.user.uid,
+                username,
+                email,
+                avatar: imgUrl,
+                blocked: []
+            });
+
+            await setDoc(doc(db, "userchats", res.user.uid), {
+                chats: [],
+            });
+
+            toast.success("Account created!");
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -41,10 +75,10 @@ export const Register = () => {
                     <span className="upload-avatar-text">Upload an avatar</span>
                 </label>
                 <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar} />
-                <input type="text" placeholder='username' className='register-username' />
-                <input type="text" placeholder='Email' className='email' />
-                <input type="password" placeholder='Password' className='password' />
-                <button className="sign-up">Sign Up</button>
+                <input type="text" placeholder='username' className='register-username' name="username" />
+                <input type="text" placeholder='Email' className='email' name="email" />
+                <input type="password" placeholder='Password' className='password' name="password" />
+                <button className="sign-up" disabled={loading}>{loading ? "Loading" : "Sign Up"}</button>
             </form>
         </div>
     )
