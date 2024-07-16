@@ -1,12 +1,16 @@
 import "./addUser.css";
 
 import { db } from "../../../../configs/firebase";
-import { where, query, getDocs, collection } from "firebase/firestore";
+import { where, query, getDocs, collection, setDoc, serverTimestamp, doc, updateDoc, arrayUnion } from "firebase/firestore";
 
 import { useState } from "react";
 
+import { useUserStore } from "../../../../configs/userStore";
+
 export const AddUser = () => {
     const [user, setUser] = useState(null);
+
+    const { currentUser } = useUserStore();
 
     const onSearchClick = async (e) => {
         e.preventDefault();
@@ -29,10 +33,44 @@ export const AddUser = () => {
         }
     };
 
+    const onAddUserClick = async () => {
+        const chatRef = collection(db, "chats");
+        const userChatsRef = collection(db, "userchats");
+
+        try {
+            const newChatRef = doc(chatRef);
+
+            await setDoc(newChatRef, {
+                createdAt: serverTimestamp(),
+                messages: [],
+            });
+
+            await updateDoc(doc(userChatsRef, user.id), {
+                chats: arrayUnion({
+                    chatId: newChatRef.id,
+                    lastMessage: "",
+                    receiverId: currentUser.id,
+                    updatedAt: Date.now(),
+                })
+            });
+
+            await updateDoc(doc(userChatsRef, currentUser.id), {
+                chats: arrayUnion({
+                    chatId: newChatRef.id,
+                    lastMessage: "",
+                    receiverId: user.id,
+                    updatedAt: Date.now(),
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="addUser">
             <form className="addUser-form" onSubmit={onSearchClick}>
-                <input type="text" placeholder="username" className="addUser-username" name="username"/>
+                <input type="text" placeholder="username" className="addUser-username" name="username" />
                 <button className="addUser-btn">Search</button>
             </form>
 
@@ -43,7 +81,7 @@ export const AddUser = () => {
                             <img src={user.avatar || "./avatar.png"} alt="avatar png" className="found-user-avatar-png" />
                             <span className="found-user-username">{user.username}</span>
                         </div>
-                        <button className="user-list-add-user-btn">Add User</button>
+                        <button className="user-list-add-user-btn" b onClick={onAddUserClick}>Add User</button>
                     </div>
                 </div>
             }

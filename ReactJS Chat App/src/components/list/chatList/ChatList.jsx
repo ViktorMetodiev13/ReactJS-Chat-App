@@ -59,10 +59,10 @@ export const ChatList = () => {
 
             {chats.map((chat) => (
                 <div className='users' key={chat.chatId}>
-                    <img src="./avatar.png" alt="user image" className="userImage" />
+                    <img src={chat.user.avatar || "./avatar.png"} alt="user image" className="userImage" />
 
                     <div className="userBriefInfo">
-                        <span className="username">Maria Nelson</span>
+                        <span className="username">{chat.user.username}</span>
                         <p className="latestMessage">{chat.lastMessage}</p>
                     </div>
                 </div>
