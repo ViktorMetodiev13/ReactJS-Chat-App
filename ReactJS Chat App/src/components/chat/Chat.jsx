@@ -40,7 +40,7 @@ export const Chat = () => {
 
         try {
             await updateDoc(doc(db, "chats", chatId), {
-                message: arrayUnion({
+                messages: arrayUnion({
                     senderId: currentUser.id,
                     textField: text,
                     createdAt: new Date(),
@@ -50,7 +50,7 @@ export const Chat = () => {
             const userIDs = [currentUser.id, user.id];
 
             userIDs.forEach(async (id) => {
-                const userChatRef = doc(db, "userChats", id);
+                const userChatRef = doc(db, "userchats", id);
                 const userChatsSnapShot = await getDoc(userChatRef);
     
                 if (userChatsSnapShot.exists()) {
@@ -58,9 +58,9 @@ export const Chat = () => {
     
                     const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
     
-                    userChatsData[chatIndex].lastMessage = text;
-                    userChatsData[chatIndex].isSeen = id === currentUser.id ? true : false;
-                    userChatsData[chatIndex].updatedAt = Date.now();
+                    userChatsData.chats[chatIndex].lastMessage = text;
+                    userChatsData.chats[chatIndex].isSeen = id === currentUser.id ? true : false;
+                    userChatsData.chats[chatIndex].updatedAt = Date.now();
     
                     await updateDoc(userChatRef, {
                         chats: userChatsData.chats
@@ -104,7 +104,7 @@ export const Chat = () => {
             </div>
 
             <div className="main">
-                {chat?.messages?.map(message => (
+                {chat?.messages?.map((message) => (
                     <div className="main-message-own" key={message?.createAt}>
                         <div className="main-message-params">
                             {message.img &&
@@ -114,8 +114,7 @@ export const Chat = () => {
                             {/* <span className="main-date">{message.createdAt}</span> */}
                         </div>
                     </div>
-                ))
-                }
+                ))}
 
                 <div ref={endRef}></div>
             </div>
