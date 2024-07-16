@@ -1,27 +1,87 @@
-import { useEffect, useRef, useState } from 'react'
 import './chat.css'
 
+import { useEffect, useRef, useState } from 'react'
 import EmojiPicker from 'emoji-picker-react'
 
+import { arrayUnion, doc, onSnapshot, updateDoc, getDoc } from 'firebase/firestore';
+import { db } from '../../configs/firebase';
+
+import { useChatStore } from '../../configs/chatStore';
+import { useUserStore } from '../../configs/userStore';
+
 export const Chat = () => {
+    const [chat, setChat] = useState();
     const [emojisMenu, setEmojisMenu] = useState(false);
-    const [textField, setTextField] = useState();
+    const [text, setText] = useState();
+
+    const { chatId, user } = useChatStore();
+    const { currentUser } = useUserStore();
 
     const endRef = useRef(null);
+
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+            setChat(res.data());
+        });
+
+        return () => {
+            unSub();
+        };
+    }, [chatId]);
+
+    const onSendClick = async () => {
+        if (text == "") {
+            return;
+        };
+
+        try {
+            await updateDoc(doc(db, "chats", chatId), {
+                message: arrayUnion({
+                    senderId: currentUser.id,
+                    textField: text,
+                    createdAt: new Date(),
+                })
+            });
+
+            const userIDs = [currentUser.id, user.id];
+
+            userIDs.forEach(async (id) => {
+                const userChatRef = doc(db, "userChats", id);
+                const userChatsSnapShot = await getDoc(userChatRef);
+    
+                if (userChatsSnapShot.exists()) {
+                    const userChatsData = userChatsSnapShot.data();
+    
+                    const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
+    
+                    userChatsData[chatIndex].lastMessage = text;
+                    userChatsData[chatIndex].isSeen = id === currentUser.id ? true : false;
+                    userChatsData[chatIndex].updatedAt = Date.now();
+    
+                    await updateDoc(userChatRef, {
+                        chats: userChatsData.chats
+                    });
+                };
+            });
+        } catch (error) {
+            console.log(error);
+        };
+    };
 
     const onUserClick = () => {
         setEmojisMenu(!emojisMenu);
     };
 
     const onEmojiAddHandler = (e) => {
-        setTextField(state => state + e.emoji);
+        setText(state => state + e.emoji);
     };
 
     const onChangeHandler = (e) => {
-        setTextField(e.target.value);
+        setText(e.target.value);
     };
 
     return (
@@ -44,58 +104,19 @@ export const Chat = () => {
             </div>
 
             <div className="main">
-                <div className="main-message">
-                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
-
-                    <div className="main-message-params">
-                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
+                {chat?.messages?.map(message => (
+                    <div className="main-message-own" key={message?.createAt}>
+                        <div className="main-message-params">
+                            {message.img &&
+                                <img src={message.img} alt="image message" />
+                            }
+                            <p className="main-text-own">{message.textField}</p>
+                            {/* <span className="main-date">{message.createdAt}</span> */}
+                        </div>
                     </div>
-                </div>
+                ))
+                }
 
-                <div className="main-message-own">
-                    <div className="main-message-params">
-                        <img src="./theme.png" alt="image message" />
-                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="main-message">
-                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
-                    <div className="main-message-params">
-                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="main-message-own">
-                    <div className="main-message-params">
-                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="main-message">
-                    <img src="./avatar.png" alt="avatar png" className="main-avatar" />
-                    <div className="main-message-params">
-                        <p className="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="main-message-own">
-                    <div className="main-message-params">
-                        <p className="main-text-own">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis ab ipsum velit eligendi optio,
-                            sapiente error nesciunt voluptate quis expedita?</p>
-                        <span className="main-date">1 min ago</span>
-                    </div>
-                </div>
                 <div ref={endRef}></div>
             </div>
 
@@ -110,7 +131,7 @@ export const Chat = () => {
                     placeholder='Type a message'
                     className='footer-input-field'
                     onChange={onChangeHandler}
-                    value={textField}
+                    value={text}
                 />
 
                 <div className="footer-emojis-send-span">
@@ -127,7 +148,7 @@ export const Chat = () => {
                             onEmojiClick={onEmojiAddHandler}
                         />
                     </div>
-                    <button className="footer-send-button">Send</button>
+                    <button className="footer-send-button" onClick={onSendClick}>Send</button>
                 </div>
             </div>
         </div>
