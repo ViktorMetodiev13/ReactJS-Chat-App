@@ -3,6 +3,8 @@ import { auth } from "./configs/firebase";
 
 import { useEffect } from "react";
 
+import { useUserStore } from "./configs/userStore";
+
 import { Chat } from "./components/chat/Chat";
 import { Detail } from "./components/detail/Detail";
 import { List } from "./components/list/List";
@@ -12,21 +14,27 @@ import { Notification } from "./components/notification/notification";
 
 
 const App = () => {
-    const user = false;
+    const { currentUser, isLoading, fetchUserInfo } = useUserStore();
 
     useEffect(() => {
         const onSub = onAuthStateChanged(auth, (user) => {
-            console.log(user);
+            fetchUserInfo(user?.uid)
         });
 
         return () => {
             onSub();
         };
-    }, []);
+    }, [fetchUserInfo]);
+
+    console.log(currentUser);
+
+    if (isLoading) {
+        return <div className="loading">Loading...</div>
+    };
 
     return (
         <div className="container">
-            {user ?
+            {currentUser ?
                 <>
                     <List />
                     <Chat />

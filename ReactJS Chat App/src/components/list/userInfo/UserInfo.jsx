@@ -1,11 +1,17 @@
 import './userInfo.css'
 
+import { useUserStore } from "../../../configs/userStore";
+
 export const UserInfo = () => {
+    const { currentUser } = useUserStore();
+
+    const { avatar, email, id, username } = currentUser;
+
     return (
         <div className="userInfo">
             <div className="userInfo-user">
-                <img src="./avatar.png" alt="user image" className="userInfo-avatar" />
-                <h2 className='userInfo-username'>John Smith</h2>
+                <img src={avatar || './avatar.png'} alt="user image" className="userInfo-avatar" />
+                <h2 className='userInfo-username'>{username}</h2>
             </div>
 
             <div className="userInfo-icons">

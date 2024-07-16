@@ -1,12 +1,19 @@
+import { auth } from '../../configs/firebase';
 import './detail.css';
 
 import { useState } from "react";
+
+
 
 export const Detail = () => {
     const [chatSettings, setChatSettings] = useState(true);
     const [privacyAndHelp, setPrivacyAndHelp] = useState(true);
     const [sharedPhotos, setSharedPhotos] = useState(true);
     const [sharedFiles, setSharedFiles] = useState(true);
+
+    const onLogoutClick = () => {
+        auth.signOut();
+    };
 
     return (
         <div className="detail">
@@ -88,7 +95,7 @@ export const Detail = () => {
 
             <footer className="buttons">
                 <button className="block-user">Block User</button>
-                <button className="logout-btn">Logout</button>
+                <button className="logout-btn" onClick={onLogoutClick}>Logout</button>
             </footer>
         </div>
     )

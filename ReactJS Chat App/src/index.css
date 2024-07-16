@@ -25,3 +25,10 @@ body {
   display: flex;
   overflow-x: hidden;
 }
+
+.loading {
+  padding: 26px 50px;
+  font-size: 32px;
+  border-radius: 10px;
+  background-color: rgba(17, 25, 40, 0.9);
+}

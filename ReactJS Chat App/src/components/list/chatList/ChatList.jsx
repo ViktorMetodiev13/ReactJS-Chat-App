@@ -3,7 +3,7 @@ import './chatList.css'
 import { AddUser } from './addUser/AddUser';
 
 export const ChatList = () => {
-    const [addMode, setAddMode] = useState(true);
+    const [addMode, setAddMode] = useState(false);
 
     const showUsersList = () => {
         setAddMode(!addMode);
