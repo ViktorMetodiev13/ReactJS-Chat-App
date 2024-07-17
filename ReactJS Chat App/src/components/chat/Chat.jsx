@@ -8,13 +8,18 @@ import { db } from '../../configs/firebase';
 
 import { useChatStore } from '../../configs/chatStore';
 import { useUserStore } from '../../configs/userStore';
+import { upload } from '../../configs/upload';
 
 export const Chat = () => {
     const [chat, setChat] = useState();
     const [emojisMenu, setEmojisMenu] = useState(false);
     const [text, setText] = useState();
+    const [img, setImg] = useState({
+        file: null,
+        url: "",
+    });
 
-    const { chatId, user } = useChatStore();
+    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, } = useChatStore();
     const { currentUser } = useUserStore();
 
     const endRef = useRef(null);
@@ -33,18 +38,34 @@ export const Chat = () => {
         };
     }, [chatId]);
 
+    const handleImg = (e) => {
+        if (e.target.files[0]) {
+            setImg({
+                file: e.target.files[0],
+                url: URL.createObjectURL(e.target.files[0])
+            });
+        };
+    };
+
     const onSendClick = async () => {
         if (text == "") {
             return;
         };
 
+        let imgUrl = null;
+
         try {
+            if (img.file) {
+                imgUrl = await upload(img.file);
+            };
+
             await updateDoc(doc(db, "chats", chatId), {
                 messages: arrayUnion({
                     senderId: currentUser.id,
                     textField: text,
                     createdAt: new Date(),
-                })
+                    ...(imgUrl && { img: imgUrl }),
+                }),
             });
 
             const userIDs = [currentUser.id, user.id];
@@ -52,16 +73,16 @@ export const Chat = () => {
             userIDs.forEach(async (id) => {
                 const userChatRef = doc(db, "userchats", id);
                 const userChatsSnapShot = await getDoc(userChatRef);
-    
+
                 if (userChatsSnapShot.exists()) {
                     const userChatsData = userChatsSnapShot.data();
-    
+
                     const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
-    
+
                     userChatsData.chats[chatIndex].lastMessage = text;
                     userChatsData.chats[chatIndex].isSeen = id === currentUser.id ? true : false;
                     userChatsData.chats[chatIndex].updatedAt = Date.now();
-    
+
                     await updateDoc(userChatRef, {
                         chats: userChatsData.chats
                     });
@@ -70,6 +91,13 @@ export const Chat = () => {
         } catch (error) {
             console.log(error);
         };
+
+        setImg({
+            file: null,
+            url: ""
+        });
+
+        setText("");
     };
 
     const onUserClick = () => {
@@ -84,14 +112,36 @@ export const Chat = () => {
         setText(e.target.value);
     };
 
+    const addMessage = (content) => {
+        const timestamp = new Date().getTime();
+        
+        updateTimestamps();
+    };
+
+    function updateTimestamps() {
+        const now = new Date().getTime();
+
+        timestamps.forEach(timestampElement => {
+            const messageTime = parseInt(timestampElement.getAttribute('data-timestamp'), 10);
+            const minutesAgo = Math.floor((now - messageTime) / 60000);
+            if (minutesAgo === 0) {
+                timestampElement.textContent = 'Just now';
+            } else {
+                timestampElement.textContent = `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
+            }
+        });
+    }
+
+    setInterval(updateTimestamps, 60000);
+
     return (
         <div className="chat">
             <div className="heading">
                 <div className="heading-user">
-                    <img src="./avatar.png" alt="avatar png" className="heading-avatar" />
+                    <img src={user?.avatar || "./avatar.png"} alt="avatar png" className="heading-avatar" />
 
                     <div className="heading-userInfomation">
-                        <span className="heading-username">Maria Nelson</span>
+                        <span className="heading-username">{user?.username}</span>
                         <p className="heading-status">Grateful for every sunrise and sunset</p>
                     </div>
                 </div>
@@ -105,32 +155,42 @@ export const Chat = () => {
 
             <div className="main">
                 {chat?.messages?.map((message) => (
-                    <div className="main-message-own" key={message?.createAt}>
+                    <div className={message.senderId === currentUser?.id ? "main-message-own" : "main-message"} key={message?.createAt}>
                         <div className="main-message-params">
                             {message.img &&
                                 <img src={message.img} alt="image message" />
                             }
-                            <p className="main-text-own">{message.textField}</p>
-                            {/* <span className="main-date">{message.createdAt}</span> */}
+                            <p className={message.senderId === currentUser?.id ? "main-text-own" : "main-text"}>{message.textField}</p>
+                            {/* <span className="main-date">2 min ago</span> */}
                         </div>
                     </div>
                 ))}
+                {img.url &&
+                    <div className='main-message-own'>
+                        <div className='texts'>
+                            <img src={img.url} alt="" />
+                        </div>
+                    </div>}
 
                 <div ref={endRef}></div>
             </div>
 
             <div className="footer">
                 <div className="footer-icons">
-                    <img src="./img.png" alt="img icon" className="footer-img-icon" />
+                    <label htmlFor="file">
+                        <img src="./img.png" alt="img icon" className="footer-img-icon" />
+                    </label>
+                    <input type='file' id='file' style={{ display: "none" }} onChange={handleImg} />
                     <img src="./camera.png" alt="camera icon" className="footer-camera-icon" />
                     <img src="./mic.png" alt="microphone icon" className="footer-mic-icon" />
                 </div>
                 <input
                     type="text"
-                    placeholder='Type a message'
+                    placeholder={(isCurrentUserBlocked || isReceiverBlocked) ? "This user is currently blocked" : "Type a message"}
                     className='footer-input-field'
                     onChange={onChangeHandler}
                     value={text}
+                    disabled={isCurrentUserBlocked || isReceiverBlocked}
                 />
 
                 <div className="footer-emojis-send-span">
@@ -147,7 +207,11 @@ export const Chat = () => {
                             onEmojiClick={onEmojiAddHandler}
                         />
                     </div>
-                    <button className="footer-send-button" onClick={onSendClick}>Send</button>
+                    <button
+                        className="footer-send-button"
+                        onClick={onSendClick}
+                        disabled={isCurrentUserBlocked || isReceiverBlocked}
+                    >Send</button>
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@ const App = () => {
             {currentUser ?
                 <>
                     <List />
-                    {chatId && <Chat />}
+                    {chatId ? <Chat /> : <div className="select-chat">Select a chat to start a conversation.</div>}
                     {chatId && <Detail />}
                 </>
                 :

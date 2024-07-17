@@ -22,8 +22,8 @@ export const Register = () => {
             setAvatar({
                 file: e.target.files[0],
                 url: URL.createObjectURL(e.target.files[0])
-            })
-        }
+            });
+        };
     };
 
     const onRegisterSubmit = async (e) => {

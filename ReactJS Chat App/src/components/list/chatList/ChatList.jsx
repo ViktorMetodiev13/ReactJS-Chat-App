@@ -13,6 +13,7 @@ import { AddUser } from './addUser/AddUser';
 export const ChatList = () => {
     const [addMode, setAddMode] = useState(false);
     const [chats, setChats] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     const { currentUser } = useUserStore();
     const { changeChat } = useChatStore();
@@ -61,8 +62,11 @@ export const ChatList = () => {
         } catch (error) {
             console.log(error);
         };
-
     };
+
+    const filteredChats = chats.filter(c => 
+        c.user.username.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     const showUsersList = () => {
         setAddMode(!addMode);
@@ -73,7 +77,7 @@ export const ChatList = () => {
             <div className="search">
                 <div className="searchBar">
                     <img src="./search.png" alt="search png" className="searchIcon icon" />
-                    <input type="text" className='searchInput' placeholder='Search' />
+                    <input type="text" className='searchInput' placeholder='Search' onChange={(e) => setSearchText(e.target.value)}/>
                 </div>
 
                 <img
@@ -83,7 +87,7 @@ export const ChatList = () => {
                 />
             </div>
 
-            {chats.map((chat) => (
+            {filteredChats.map((chat) => (
                 <div
                     className='users'
                     key={chat.chatId}
@@ -95,8 +99,8 @@ export const ChatList = () => {
                     <img src={chat.user.avatar || "./avatar.png"} alt="user image" className="userImage" />
 
                     <div className="userBriefInfo">
-                        <span className="username">{chat.user.username}</span>
-                        <p className="latestMessage">{chat.lastMessage}</p>
+                        <span className="username">{chat.user.blocked.includes(currentUser.id) ? "User" : chat.user.username}</span>
+                        <p className="latestMessage">{chat.user.blocked.includes(currentUser.id) ? "" : chat.lastMessage}</p>
                     </div>
                 </div>
             ))}

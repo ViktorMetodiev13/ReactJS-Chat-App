@@ -1,4 +1,7 @@
-import { auth } from '../../configs/firebase';
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { useChatStore } from '../../configs/chatStore';
+import { auth, db } from '../../configs/firebase';
+import { useUserStore } from '../../configs/userStore';
 import './detail.css';
 
 import { useState } from "react";
@@ -11,15 +14,36 @@ export const Detail = () => {
     const [sharedPhotos, setSharedPhotos] = useState(true);
     const [sharedFiles, setSharedFiles] = useState(true);
 
+    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
+    const { currentUser } = useUserStore();
+
     const onLogoutClick = () => {
         auth.signOut();
+    };
+
+    const onBlockUserClick = async () => {
+        if (!user) {
+            return;
+        };
+
+        const userDocRef = doc(db, "users", currentUser.id);
+
+        try {
+            await updateDoc(userDocRef, {
+                blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+            });
+
+            changeBlock();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
         <div className="detail">
             <div className="detail-userInformation">
-                <img src="./avatar.png" alt="detail-avatar" className='detail-avatar' />
-                <h2 className='detail-title'>Maria Nelson</h2>
+                <img src={user?.avatar || "./avatar.png"} alt="detail-avatar" className='detail-avatar' />
+                <h2 className='detail-title'>{user?.username}</h2>
                 <p className='detail-subtitle'>Grateful for every sunrise and sunset</p>
             </div>
 
@@ -77,8 +101,6 @@ export const Detail = () => {
                                 </div>
                             </div>
                         </> : ""}
-
-
                 </div>
 
                 <div className="detail-option">
@@ -94,7 +116,14 @@ export const Detail = () => {
             </div>
 
             <footer className="buttons">
-                <button className="block-user">Block User</button>
+                <button className="block-user" onClick={onBlockUserClick}>
+                    {isCurrentUserBlocked
+                        ? "You are Blocked!"
+                        : isReceiverBlocked
+                        ? "User blocked"
+                        : "Block User"
+                    }
+                </button>
                 <button className="logout-btn" onClick={onLogoutClick}>Logout</button>
             </footer>
         </div>

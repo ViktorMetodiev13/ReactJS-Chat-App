@@ -2,9 +2,19 @@
 
 .chat {
     flex: 2;
-    border-right: 1px solid rgba(255,255,255,.25);
+    border-right: 1px solid rgba(255, 255, 255, .25);
     display: flex;
     flex-direction: column;
+}
+
+.select-chat {
+    padding: 160px;
+    font-size: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    color: rgba(255, 255, 255, .4);
 }
 
 /* Heading */
@@ -15,7 +25,7 @@
     justify-content: space-between;
     padding: 18px 22px 20px 22px;
     position: sticky;
-    border-bottom: 1px solid rgba(255,255,255,.25);
+    border-bottom: 1px solid rgba(255, 255, 255, .25);
 }
 
 .heading-user {
@@ -125,7 +135,7 @@ img {
     justify-content: space-between;
     gap: 20px;
     padding: 20px 0px;
-    border-top: 1px solid rgba(255,255,255,.25);
+    border-top: 1px solid rgba(255, 255, 255, .25);
 }
 
 .footer-icons {
@@ -150,6 +160,10 @@ img {
     background-color: rgba(17, 25, 40, 0.5);
     font-size: 18px;
     color: #fff;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
 }
 
 .footer-emojis-send-span {
@@ -179,4 +193,9 @@ img {
     cursor: pointer;
     margin-right: 20px;
     color: #fff;
+
+    &:disabled {
+        background-color: #5182feb4;
+        cursor: not-allowed;
+    }
 }
