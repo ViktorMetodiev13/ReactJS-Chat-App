@@ -16,7 +16,6 @@ export const UserInfo = () => {
 
             <div className="userInfo-icons">
                 <img src="./more.png" alt="more icon" className="userInfo-more-icon" />
-                <img src="./video.png" alt="video icon" className="userInfo-video-icon" />
                 <img src="./edit.png" alt="edit icon" className="userInfo-edit-icon" />
             </div>
         </div>

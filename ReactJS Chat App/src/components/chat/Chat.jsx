@@ -112,28 +112,6 @@ export const Chat = () => {
         setText(e.target.value);
     };
 
-    const addMessage = (content) => {
-        const timestamp = new Date().getTime();
-        
-        updateTimestamps();
-    };
-
-    function updateTimestamps() {
-        const now = new Date().getTime();
-
-        timestamps.forEach(timestampElement => {
-            const messageTime = parseInt(timestampElement.getAttribute('data-timestamp'), 10);
-            const minutesAgo = Math.floor((now - messageTime) / 60000);
-            if (minutesAgo === 0) {
-                timestampElement.textContent = 'Just now';
-            } else {
-                timestampElement.textContent = `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
-            }
-        });
-    }
-
-    setInterval(updateTimestamps, 60000);
-
     return (
         <div className="chat">
             <div className="heading">
@@ -147,8 +125,6 @@ export const Chat = () => {
                 </div>
 
                 <div className="heading-icons">
-                    <img src="./phone.png" alt="more icon" className="heading-phone-icon" />
-                    <img src="./video.png" alt="video icon" className="heading-video-icon" />
                     <img src="./info.png" alt="edit icon" className="heading-info-icon" />
                 </div>
             </div>
@@ -181,8 +157,6 @@ export const Chat = () => {
                         <img src="./img.png" alt="img icon" className="footer-img-icon" />
                     </label>
                     <input type='file' id='file' style={{ display: "none" }} onChange={handleImg} />
-                    <img src="./camera.png" alt="camera icon" className="footer-camera-icon" />
-                    <img src="./mic.png" alt="microphone icon" className="footer-mic-icon" />
                 </div>
                 <input
                     type="text"
