@@ -137,7 +137,7 @@ export const Chat = () => {
                                 <img src={message.img} alt="image message" />
                             }
                             <p className={message.senderId === currentUser?.id ? "main-text-own" : "main-text"}>{message.textField}</p>
-                            {/* <span className="main-date">2 min ago</span> */}
+                            <span className="main-date">2 min ago</span>
                         </div>
                     </div>
                 ))}
