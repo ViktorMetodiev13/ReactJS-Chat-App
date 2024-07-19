@@ -1,8 +1,8 @@
 import "./register.css";
 
+import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../configs/firebase";
-import { doc, setDoc } from "firebase/firestore";
 import { upload } from "../../configs/upload";
 
 import { toast } from 'react-toastify';

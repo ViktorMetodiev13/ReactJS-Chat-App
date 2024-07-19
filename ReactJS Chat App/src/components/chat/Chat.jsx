@@ -1,7 +1,7 @@
-import './chat.css'
+import './chat.css';
 
-import { useEffect, useRef, useState } from 'react'
-import EmojiPicker from 'emoji-picker-react'
+import { useEffect, useRef, useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
 import { arrayUnion, doc, onSnapshot, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../configs/firebase';
@@ -9,11 +9,13 @@ import { db } from '../../configs/firebase';
 import { useChatStore } from '../../configs/chatStore';
 import { useUserStore } from '../../configs/userStore';
 import { upload } from '../../configs/upload';
+import { UserInfoModal } from './userInfoModal/UserInfoModal';
 
 export const Chat = () => {
     const [chat, setChat] = useState();
     const [emojisMenu, setEmojisMenu] = useState(false);
     const [text, setText] = useState();
+    const [showUserInfoModal, setShowUserInfoModal] = useState(false);
     const [img, setImg] = useState({
         file: null,
         url: "",
@@ -112,6 +114,10 @@ export const Chat = () => {
         setText(e.target.value);
     };
 
+    const onInfoClick = (value) => {
+        setShowUserInfoModal(value);
+    };
+
     return (
         <div className="chat">
             <div className="heading">
@@ -125,7 +131,8 @@ export const Chat = () => {
                 </div>
 
                 <div className="heading-icons">
-                    <img src="./info.png" alt="edit icon" className="heading-info-icon" />
+                    <img src="./info.png" alt="edit icon" className="heading-info-icon" onClick={onInfoClick}/>
+                    {showUserInfoModal && <UserInfoModal onInfoClick={onInfoClick}/>}
                 </div>
             </div>
 
