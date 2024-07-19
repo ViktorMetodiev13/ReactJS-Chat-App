@@ -28,7 +28,7 @@ export const Chat = () => {
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, []);
+    }, [chat?.messages]);
 
     useEffect(() => {
         const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
@@ -155,7 +155,7 @@ export const Chat = () => {
                         </div>
                     </div>}
 
-                <div ref={endRef}></div>
+                <div ref={endRef} />
             </div>
 
             <div className="footer">
