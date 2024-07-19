@@ -8,7 +8,7 @@ export const UserInfoModal = ({
     const { user } = useChatStore();
 
     const onCloseClick = () => {
-        onInfoClick(false)
+        onInfoClick(false);
     };
 
     return (

@@ -1,0 +1,18 @@
+.user-info-modal-list {
+    width: max-content;
+    height: max-content;
+    padding: 30px;
+    background-color: rgba(17, 25, 40, 0.85);
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+#cross-icon:hover {
+    background-color: red;
+    cursor: pointer;
+}

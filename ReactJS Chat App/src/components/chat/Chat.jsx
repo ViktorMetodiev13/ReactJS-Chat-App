@@ -114,8 +114,8 @@ export const Chat = () => {
         setText(e.target.value);
     };
 
-    const onInfoClick = (value) => {
-        setShowUserInfoModal(value);
+    const onInfoClick = () => {
+        setShowUserInfoModal(!showUserInfoModal);
     };
 
     return (
