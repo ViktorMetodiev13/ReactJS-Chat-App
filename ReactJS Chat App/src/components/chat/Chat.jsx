@@ -126,7 +126,7 @@ export const Chat = () => {
 
                     <div className="heading-userInfomation">
                         <span className="heading-username">{user?.username}</span>
-                        <p className="heading-status">Grateful for every sunrise and sunset</p>
+                        <p className="heading-status">{user?.status}</p>
                     </div>
                 </div>
 

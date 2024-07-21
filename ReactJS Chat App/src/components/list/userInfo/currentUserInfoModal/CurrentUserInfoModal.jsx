@@ -19,7 +19,7 @@ export const CurrentUserInfoModal = ({
                 <img src={currentUser?.avatar || "./avatar.png"} alt="chat-info-avatar" className='chat-info-avatar' />
                 <h2 className='chat-info-username'>{currentUser?.username}</h2>
                 <span className='chat-info-email'>{currentUser?.email}</span>
-                <p className='chat-info-status'>Grateful for every sunrise and sunset</p>
+                <p className='chat-info-status'>{currentUser?.status}</p>
             </div>
         </div>
     )

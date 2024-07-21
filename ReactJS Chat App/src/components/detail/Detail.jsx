@@ -44,7 +44,7 @@ export const Detail = () => {
             <div className="detail-userInformation">
                 <img src={user?.avatar || "./avatar.png"} alt="detail-avatar" className='detail-avatar' />
                 <h2 className='detail-title'>{user?.username}</h2>
-                <p className='detail-subtitle'>Grateful for every sunrise and sunset</p>
+                <p className='detail-subtitle'>{user?.status}</p>
             </div>
 
             <div className="detail-options">

@@ -68,7 +68,7 @@ export const ChatList = () => {
         c.user.username.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    const showUsersList = () => {
+    const showAddUserModal = () => {
         setAddMode(!addMode);
     };
 
@@ -83,7 +83,7 @@ export const ChatList = () => {
                 <img
                     src={addMode ? "./minus.png" : "./plus.png"}
                     alt="add" className="addPerson icon"
-                    onClick={showUsersList}
+                    onClick={showAddUserModal}
                 />
             </div>
 

@@ -8,11 +8,16 @@ import { CurrentUserInfoModal } from "./currentUserInfoModal/CurrentUserInfoModa
 
 export const UserInfo = () => {
     const [showMoreModal, setShowMoreModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const { currentUser } = useUserStore();
 
-    const onMoreClick = (value) => {
+    const onMoreClick = () => {
         setShowMoreModal(!showMoreModal);
+    };
+
+    const onEditClick = () => {
+        setShowEditModal(!showEditModal);
     };
 
     return (
@@ -25,7 +30,7 @@ export const UserInfo = () => {
 
             <div className="userInfo-icons">
                 <img src="./more.png" alt="more icon" className="userInfo-more-icon" onClick={onMoreClick}/>
-                <img src="./edit.png" alt="edit icon" className="userInfo-edit-icon" />
+                <img src="./edit.png" alt="edit icon" className="userInfo-edit-icon" onClick={onEditClick}/>
             </div>
         </div>
     )
