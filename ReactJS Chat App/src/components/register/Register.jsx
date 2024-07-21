@@ -75,7 +75,7 @@ export const Register = () => {
                     <span className="upload-avatar-text">Upload an avatar</span>
                 </label>
                 <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar} />
-                <input type="text" placeholder='username' className='register-username' name="username" />
+                <input type="text" placeholder='Username' className='register-username' name="username" />
                 <input type="text" placeholder='Email' className='email' name="email" />
                 <input type="password" placeholder='Password' className='password' name="password" />
                 <button className="sign-up" disabled={loading}>{loading ? "Loading" : "Sign Up"}</button>

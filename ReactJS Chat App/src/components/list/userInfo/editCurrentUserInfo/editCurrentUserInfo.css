@@ -1,0 +1,70 @@
+.editCurrentUser {
+    width: 330px;
+    height: max-content;
+    padding: 30px;
+    background-color: rgba(17, 25, 40, 0.85);
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+#cross-icon:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+.edit-user-title {
+    margin-bottom: 20px;
+}
+
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-user-form>input {
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 6px;
+    background-color: rgba(17, 25, 40, 0.9);
+    color: #fff;
+    border: none;
+    outline: 1px solid #fff;
+}
+
+.edit-status {
+    margin-bottom: 50px;
+}
+
+.edit-buttons {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 16px;
+}
+
+.edit-save {
+    background-color: blue;
+    border: none;
+    color: #fff;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-cancel {
+    padding: 10px 16px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}

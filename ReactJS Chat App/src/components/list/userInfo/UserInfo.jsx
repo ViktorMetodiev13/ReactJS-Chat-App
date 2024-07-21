@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useUserStore } from "../../../configs/userStore";
 
 import { CurrentUserInfoModal } from "./currentUserInfoModal/CurrentUserInfoModal";
+import { EditCurrentUserInfo } from './editCurrentUserInfo/EditCurrentUserInfo';
 
 export const UserInfo = () => {
     const [showMoreModal, setShowMoreModal] = useState(false);
@@ -23,6 +24,8 @@ export const UserInfo = () => {
     return (
         <div className="userInfo">
             {showMoreModal && <CurrentUserInfoModal onMoreClick={onMoreClick}/>}
+            {showEditModal && <EditCurrentUserInfo onEditClick={onEditClick}/>}
+            
             <div className="userInfo-user">
                 <img src={currentUser.avatar || './avatar.png'} alt="user image" className="userInfo-avatar" />
                 <h2 className='userInfo-username'>{currentUser.username}</h2>
