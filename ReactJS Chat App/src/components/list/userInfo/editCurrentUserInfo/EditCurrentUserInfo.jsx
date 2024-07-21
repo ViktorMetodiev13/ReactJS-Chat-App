@@ -3,6 +3,7 @@ import './editCurrentUserInfo.css';
 import { useState } from 'react';
 
 import { useUserStore } from '../../../../configs/userStore';
+import { upload } from '../../../../configs/upload';
 
 export const EditCurrentUserInfo = ({
     onEditClick
@@ -30,9 +31,32 @@ export const EditCurrentUserInfo = ({
 
         setLoading(true);
 
-        // const formData = new FormData(e.target);
+        const formData = new FormData(e.target);
 
-        // const { username, email, password } = Object.fromEntries(formData);
+        const { username, email, status } = Object.fromEntries(formData);
+
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+
+            const imgUrl = await upload(avatar.file);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                avatar: imgUrl,
+                username,
+                email,
+                status,
+            });
+
+            await setDoc(doc(db, "userchats", res.user.uid), {
+                chats: [],
+            });
+
+            toast.success("User edited!");
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onCloseClick = () => {
@@ -51,7 +75,7 @@ export const EditCurrentUserInfo = ({
             <form className='edit-user-form' onSubmit={onEditUserSubmit}>
                 <label htmlFor="file" className="register-upload-avatar-label">
                     <img
-                        src={avatar.url || "./avatar.png"}
+                        src={avatar.url || avatar.file}
                         alt="avatar png"
                         className="register-avatar-png"
                     />
