@@ -1,12 +1,13 @@
-import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
-import { useChatStore } from '../../configs/chatStore';
-import { auth, db } from '../../configs/firebase';
-import { useUserStore } from '../../configs/userStore';
 import './detail.css';
 
 import { useState } from "react";
 
+import { arrayRemove, arrayUnion, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
+import { useChatStore } from '../../configs/chatStore';
+import { auth, db } from '../../configs/firebase';
+import { useUserStore } from '../../configs/userStore';
+import { DeleteUserModal } from './deleteUserModal/DeleteUserModal';
 
 export const Detail = () => {
     const [chatSettings, setChatSettings] = useState(true);
@@ -14,7 +15,9 @@ export const Detail = () => {
     const [sharedPhotos, setSharedPhotos] = useState(true);
     const [sharedFiles, setSharedFiles] = useState(true);
 
-    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
+    const [deleteUserModal, setDeleteUserModal] = useState(false);
+
+    const { user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
     const { currentUser } = useUserStore();
 
     const onLogoutClick = () => {
@@ -37,6 +40,10 @@ export const Detail = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const onDeleteMyAccountClick = async () => {
+        setDeleteUserModal(!deleteUserModal)
     };
 
     return (
@@ -82,7 +89,6 @@ export const Detail = () => {
 
                     {!sharedPhotos ?
                         <>
-                            {/* TODO: Replace with actual data */}
                             <div className="items">
                                 <div className="item">
                                     <div className="item-image-date">
@@ -116,6 +122,8 @@ export const Detail = () => {
             </div>
 
             <footer className="buttons">
+                {deleteUserModal && <DeleteUserModal onDeleteUserClick={onDeleteMyAccountClick} />}
+
                 <button className="block-user" onClick={onBlockUserClick}>
                     {isCurrentUserBlocked
                         ? "You are Blocked!"
@@ -125,6 +133,7 @@ export const Detail = () => {
                     }
                 </button>
                 <button className="logout-btn" onClick={onLogoutClick}>Logout</button>
+                <button className='delete-user-btn' onClick={onDeleteMyAccountClick}>Delete My Account</button>
             </footer>
         </div>
     )

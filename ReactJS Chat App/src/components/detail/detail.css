@@ -126,3 +126,21 @@
     cursor: pointer;
 }
 
+.logout-btn:hover {
+    background-color: blue;
+}
+
+.delete-user-btn {
+    background-color: rgba(220, 20, 60, 0.796);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.delete-user-btn:hover {
+    background-color: rgba(220, 20, 60, 0.7);
+}
+

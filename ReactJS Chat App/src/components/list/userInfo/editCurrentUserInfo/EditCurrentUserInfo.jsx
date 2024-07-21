@@ -1,6 +1,7 @@
 import './editCurrentUserInfo.css';
 
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useUserStore } from '../../../../configs/userStore';
 import { upload } from '../../../../configs/upload';
@@ -35,28 +36,22 @@ export const EditCurrentUserInfo = ({
 
         const { username, email, status } = Object.fromEntries(formData);
 
-        try {
-            const res = await createUserWithEmailAndPassword(auth, email, password);
+        // try {
+        //     const imgUrl = await upload(avatar.file);
 
-            const imgUrl = await upload(avatar.file);
+        //     await setDoc(doc(db, "users", res.user.uid), {
+        //         avatar: imgUrl,
+        //         username,
+        //         email,
+        //         status,
+        //     });
 
-            await setDoc(doc(db, "users", res.user.uid), {
-                avatar: imgUrl,
-                username,
-                email,
-                status,
-            });
-
-            await setDoc(doc(db, "userchats", res.user.uid), {
-                chats: [],
-            });
-
-            toast.success("User edited!");
-        } catch (error) {
-            toast.error(error.message);
-        } finally {
-            setLoading(false);
-        }
+        //     toast.success("User edited!");
+        // } catch (error) {
+        //     toast.error(error.message);
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     const onCloseClick = () => {

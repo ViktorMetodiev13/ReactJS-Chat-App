@@ -65,7 +65,7 @@ export const ChatList = () => {
     };
 
     const filteredChats = chats.filter(c => 
-        c.user.username.toLowerCase().includes(searchText.toLowerCase())
+        c.user?.username.toLowerCase().includes(searchText.toLowerCase())
     );
 
     const showAddUserModal = () => {
