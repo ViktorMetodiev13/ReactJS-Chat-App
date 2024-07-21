@@ -1,0 +1,46 @@
+.deleteUserModal {
+    width: 350px;
+    height: max-content;
+    padding: 30px 26px;
+    background-color: rgba(17, 25, 40, 0.85);
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+.deleteUserModal-title {
+    margin-bottom: 48px;
+}
+
+.deleteUserModal-buttons {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    bottom: 24px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.deleteUserModal-delete {
+    padding: 6px 10px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.deleteUserModal-cancel {
+    background-color: blue;
+    border: none;
+    color: #fff;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
