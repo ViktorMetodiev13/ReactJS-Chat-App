@@ -26,7 +26,12 @@ export const EditCurrentUserInfo = ({
                 file: e.target.files[0],
                 url: URL.createObjectURL(e.target.files[0])
             });
-        };
+        } else {
+            setAvatar({
+                file: currentUser.avatar,
+                url: currentUser.avatar
+            });
+        }
     };
 
     const onEditUserSubmit = async (e) => {
@@ -39,7 +44,12 @@ export const EditCurrentUserInfo = ({
         const { username, status } = Object.fromEntries(formData);
 
         try {
-            const imgUrl = await upload(avatar.file);
+            let imgUrl;
+            if (avatar.file instanceof File) {
+                imgUrl = await upload(avatar.file);
+            } else {
+                imgUrl = avatar.file;
+            };
 
             await setDoc(doc(db, "users", currentUser.id), {
                 ...currentUser,
@@ -73,7 +83,7 @@ export const EditCurrentUserInfo = ({
             <form className='edit-user-form' onSubmit={onEditUserSubmit}>
                 <label htmlFor="file" className="register-upload-avatar-label">
                     <img
-                        src={avatar.url || avatar.file}
+                        src={avatar.url || currentUser.avatar}
                         alt="avatar png"
                         className="register-avatar-png"
                     />
