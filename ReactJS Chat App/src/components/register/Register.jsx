@@ -15,7 +15,7 @@ export const Register = () => {
         url: "",
     });
 
-    const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
 
     const handleAvatar = (e) => {
         if (e.target.files[0]) {

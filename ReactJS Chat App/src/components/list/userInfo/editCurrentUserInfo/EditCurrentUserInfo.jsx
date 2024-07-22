@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 
 import { useUserStore } from '../../../../configs/userStore';
 import { upload } from '../../../../configs/upload';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../../configs/firebase';
 
 export const EditCurrentUserInfo = ({
     onEditClick
@@ -16,8 +18,8 @@ export const EditCurrentUserInfo = ({
         file: currentUser.avatar,
         url: "",
     });
-        
-    
+
+
     const handleAvatar = (e) => {
         if (e.target.files[0]) {
             setAvatar({
@@ -35,23 +37,31 @@ export const EditCurrentUserInfo = ({
         const formData = new FormData(e.target);
 
         const { username, email, status } = Object.fromEntries(formData);
+        console.log(email);
 
-        // try {
-        //     const imgUrl = await upload(avatar.file);
+        try {
+            const imgUrl = await upload(avatar.file);
 
-        //     await setDoc(doc(db, "users", res.user.uid), {
-        //         avatar: imgUrl,
-        //         username,
-        //         email,
-        //         status,
-        //     });
+            await setDoc(doc(db, "users", currentUser.id), {
+                ...currentUser,
+                avatar: imgUrl,
+                username,
+                email,
+                status,
+            });
 
-        //     toast.success("User edited!");
-        // } catch (error) {
-        //     toast.error(error.message);
-        // } finally {
-        //     setLoading(false);
-        // }
+            await setDoc(doc(auth, "",currentUser.id), {
+                ...currentUser,
+                email,
+            });
+
+            onEditClick(false);
+            toast.success("User edited!");
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onCloseClick = () => {
@@ -64,7 +74,7 @@ export const EditCurrentUserInfo = ({
 
     return (
         <div className="editCurrentUser">
-            <i class="fa-solid fa-xmark" id='cross-icon' onClick={onCloseClick}></i>
+            <i className="fa-solid fa-xmark" id='cross-icon' onClick={onCloseClick}></i>
             <h2 className='edit-user-title'>Edit User</h2>
 
             <form className='edit-user-form' onSubmit={onEditUserSubmit}>
@@ -82,8 +92,10 @@ export const EditCurrentUserInfo = ({
                 <input type="text" placeholder='Status' className='edit-status' name="status" defaultValue={currentUser.status} />
 
                 <div className="edit-buttons">
-                    <button className="edit-save">Save</button>
-                    <button className="edit-cancel" onClick={onCancelClick}>Cancel</button>
+                    <button className="edit-save" disabled={loading}>{loading ? "Loading" : "Save"}</button>
+                    {!loading &&
+                        <button className="edit-cancel">Cancel</button>
+                    }
                 </div>
             </form>
         </div>
