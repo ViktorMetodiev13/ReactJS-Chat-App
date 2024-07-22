@@ -3,9 +3,10 @@ import './editCurrentUserInfo.css';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { doc, setDoc } from 'firebase/firestore';
+
 import { useUserStore } from '../../../../configs/userStore';
 import { upload } from '../../../../configs/upload';
-import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../../configs/firebase';
 
 export const EditCurrentUserInfo = ({
@@ -18,7 +19,6 @@ export const EditCurrentUserInfo = ({
         file: currentUser.avatar,
         url: "",
     });
-
 
     const handleAvatar = (e) => {
         if (e.target.files[0]) {
@@ -36,8 +36,7 @@ export const EditCurrentUserInfo = ({
 
         const formData = new FormData(e.target);
 
-        const { username, email, status } = Object.fromEntries(formData);
-        console.log(email);
+        const { username, status } = Object.fromEntries(formData);
 
         try {
             const imgUrl = await upload(avatar.file);
@@ -46,13 +45,7 @@ export const EditCurrentUserInfo = ({
                 ...currentUser,
                 avatar: imgUrl,
                 username,
-                email,
                 status,
-            });
-
-            await setDoc(doc(auth, "",currentUser.id), {
-                ...currentUser,
-                email,
             });
 
             onEditClick(false);
@@ -61,7 +54,7 @@ export const EditCurrentUserInfo = ({
             toast.error(error.message);
         } finally {
             setLoading(false);
-        }
+        };
     };
 
     const onCloseClick = () => {
@@ -88,13 +81,12 @@ export const EditCurrentUserInfo = ({
                 </label>
                 <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar} />
                 <input type="text" placeholder='Username' className='edit-username' name="username" defaultValue={currentUser.username} />
-                <input type="text" placeholder='Email' className='edit-email' name="email" defaultValue={currentUser.email} />
                 <input type="text" placeholder='Status' className='edit-status' name="status" defaultValue={currentUser.status} />
 
                 <div className="edit-buttons">
                     <button className="edit-save" disabled={loading}>{loading ? "Loading" : "Save"}</button>
                     {!loading &&
-                        <button className="edit-cancel">Cancel</button>
+                        <button className="edit-cancel" onClick={onCancelClick}>Cancel</button>
                     }
                 </div>
             </form>
