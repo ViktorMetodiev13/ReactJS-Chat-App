@@ -2,18 +2,21 @@ import './detail.css';
 
 import { useState } from "react";
 
-import { arrayRemove, arrayUnion, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
 import { useChatStore } from '../../configs/chatStore';
 import { auth, db } from '../../configs/firebase';
 import { useUserStore } from '../../configs/userStore';
+
 import { DeleteUserModal } from './deleteUserModal/DeleteUserModal';
+import { PrivacyAndHelpModal } from './privacyAndHelpModal/PrivacyAndHelpModal';
+import { ChatSettingsModal } from './chatSettingsModal/ChatSettingsModal';
 
 export const Detail = () => {
     const [chatSettings, setChatSettings] = useState(true);
     const [privacyAndHelp, setPrivacyAndHelp] = useState(true);
     const [sharedPhotos, setSharedPhotos] = useState(true);
-    const [sharedFiles, setSharedFiles] = useState(true);
+    // const [sharedFiles, setSharedFiles] = useState(true);
 
     const [deleteUserModal, setDeleteUserModal] = useState(false);
 
@@ -43,11 +46,22 @@ export const Detail = () => {
     };
 
     const onDeleteMyAccountClick = async () => {
-        setDeleteUserModal(!deleteUserModal)
+        setDeleteUserModal(!deleteUserModal);
+    };
+
+    const onChatSettingsClick = () => {
+        setChatSettings(!chatSettings);
+    };
+
+    const onPrivacyAndHelpClick = () => {
+        setPrivacyAndHelp(!privacyAndHelp);
     };
 
     return (
         <div className="detail">
+            {chatSettings && <ChatSettingsModal onChatSettingsClick={onChatSettingsClick} />}
+            {privacyAndHelp && <PrivacyAndHelpModal onPrivacyAndHelpClick={onPrivacyAndHelpClick} />}
+
             <div className="detail-userInformation">
                 <img src={user?.avatar || "./avatar.png"} alt="detail-avatar" className='detail-avatar' />
                 <h2 className='detail-title'>{user?.username}</h2>
@@ -59,9 +73,9 @@ export const Detail = () => {
                     <div className="option-title">
                         <span>Chat Setting</span>
                         <img
-                            src={chatSettings ? "./arrowUp.png" : "./arrowDown.png"}
+                            src={chatSettings ? "./arrowDown.png" : "./arrowUp.png"}
                             alt="arrowUp png" className='arrow-png'
-                            onClick={() => setChatSettings(!chatSettings)}
+                            onClick={onChatSettingsClick}
                         />
                     </div>
                 </div>
@@ -70,9 +84,9 @@ export const Detail = () => {
                     <div className="option-title">
                         <span>Privacy & help</span>
                         <img
-                            src={privacyAndHelp ? "./arrowUp.png" : "./arrowDown.png"}
+                            src={privacyAndHelp ? "./arrowDown.png" : "./arrowUp.png"}
                             alt="arrowUp png" className='arrow-png'
-                            onClick={() => setPrivacyAndHelp(!privacyAndHelp)}
+                            onClick={onPrivacyAndHelpClick}
                         />
                     </div>
                 </div>
@@ -108,7 +122,7 @@ export const Detail = () => {
                             </div>
                         </> : ""}
                 </div>
-
+{/* 
                 <div className="detail-option">
                     <div className="option-title">
                         <span>Shared files</span>
@@ -118,7 +132,7 @@ export const Detail = () => {
                             onClick={() => setSharedFiles(!sharedFiles)}
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <footer className="buttons">
@@ -128,8 +142,8 @@ export const Detail = () => {
                     {isCurrentUserBlocked
                         ? "You are Blocked!"
                         : isReceiverBlocked
-                        ? "User blocked"
-                        : "Block User"
+                            ? "User blocked"
+                            : "Block User"
                     }
                 </button>
                 <button className="logout-btn" onClick={onLogoutClick}>Logout</button>
