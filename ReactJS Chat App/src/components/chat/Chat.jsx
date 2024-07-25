@@ -115,8 +115,24 @@ export const Chat = () => {
     const getTimeAgo = (timestamp) => {
         const messageTime = new Date(timestamp);
         const currentTime = new Date();
-        const timeDifference = Math.floor((currentTime - messageTime) / 60000);
-        return timeDifference > 0 ? `${timeDifference} min ago` : 'Just now';
+        const timeDifferenceMinutes = Math.floor((currentTime - messageTime) / 60000);
+
+        if (timeDifferenceMinutes < 1) {
+            return 'Just now';
+        } else if (timeDifferenceMinutes === 1) {
+            return '1 minute ago';
+        } else if (timeDifferenceMinutes < 60) {
+            return `${timeDifferenceMinutes} minutes ago`;
+        } else if (timeDifferenceMinutes < 1440) {
+            const timeDifferenceHours = Math.floor(timeDifferenceMinutes / 60);
+            return `${timeDifferenceHours} ${timeDifferenceHours === 1 ? 'hour' : 'hours'} ago`;
+        } else if (timeDifferenceMinutes < 43200) {
+            const timeDifferenceDays = Math.floor(timeDifferenceMinutes / 1440);
+            return `${timeDifferenceDays} ${timeDifferenceDays === 1 ? 'day' : 'days'} ago`;
+        } else {
+            const timeDifferenceMonths = Math.floor(timeDifferenceMinutes / 43200);
+            return `${timeDifferenceMonths} ${timeDifferenceMonths === 1 ? 'month' : 'months'} ago`;
+        }
     };
 
     const onUserClick = () => {

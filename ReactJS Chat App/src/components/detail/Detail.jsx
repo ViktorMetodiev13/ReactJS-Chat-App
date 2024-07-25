@@ -99,13 +99,13 @@ export const Detail = () => {
                     <div className="option-title">
                         <span>Shared photos</span>
                         <img
-                            src={sharedPhotos ? "./arrowUp.png" : "./arrowDown.png"}
+                            src={sharedPhotos ? "./arrowDown.png" : "./arrowUp.png"}
                             alt="arrowUp png" className='arrow-png'
                             onClick={onSharedPhotosClick}
                         />
                     </div>
 
-                    {!sharedPhotos ?
+                    {sharedPhotos ?
                         <>
                             <div className="items">
                                 <div className="item">
