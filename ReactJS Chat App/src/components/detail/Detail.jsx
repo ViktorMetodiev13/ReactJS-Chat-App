@@ -78,7 +78,7 @@ export const Detail = () => {
                         <span>Chat Setting</span>
                         <img
                             src={chatSettings ? "./arrowDown.png" : "./arrowUp.png"}
-                            alt="arrowUp png" className='arrow-png'
+                            alt={chatSettings ? "./arrowDown.png" : "./arrowUp.png"} className='arrow-png'
                             onClick={onChatSettingsClick}
                         />
                     </div>
@@ -89,7 +89,7 @@ export const Detail = () => {
                         <span>Privacy & help</span>
                         <img
                             src={privacyAndHelp ? "./arrowDown.png" : "./arrowUp.png"}
-                            alt="arrowUp png" className='arrow-png'
+                            alt={privacyAndHelp ? "./arrowDown.png" : "./arrowUp.png"} className='arrow-png'
                             onClick={onPrivacyAndHelpClick}
                         />
                     </div>
@@ -100,7 +100,7 @@ export const Detail = () => {
                         <span>Shared photos</span>
                         <img
                             src={sharedPhotos ? "./arrowDown.png" : "./arrowUp.png"}
-                            alt="arrowUp png" className='arrow-png'
+                            alt={sharedPhotos ? "./arrowDown.png" : "./arrowUp.png"} className='arrow-png'
                             onClick={onSharedPhotosClick}
                         />
                     </div>

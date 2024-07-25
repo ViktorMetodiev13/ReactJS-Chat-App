@@ -76,7 +76,7 @@ export const Chat = () => {
                     senderId: currentUser.id,
                     textField: text,
                     createdAt: new Date().toISOString(),
-                    ...(imgUrl && { img: imgUrl }),
+                    imgUrl: imgUrl || "",
                 }),
             });
 

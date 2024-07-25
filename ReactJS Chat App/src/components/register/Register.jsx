@@ -15,7 +15,7 @@ export const Register = () => {
         url: "",
     });
 
-const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleAvatar = (e) => {
         if (e.target.files[0]) {
@@ -38,7 +38,11 @@ const [loading, setLoading] = useState(false);
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password);
 
-            const imgUrl = await upload(avatar.file);
+            let imgUrl = "";
+
+            if (avatar.file) {
+                imgUrl = await upload(avatar.file);
+            }
 
             await setDoc(doc(db, "users", res.user.uid), {
                 id: res.user.uid,
@@ -54,6 +58,8 @@ const [loading, setLoading] = useState(false);
             });
 
             toast.success("Account created!");
+
+            window.location.href = '/';
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -74,10 +80,10 @@ const [loading, setLoading] = useState(false);
                     />
                     <span className="upload-avatar-text">Upload an avatar</span>
                 </label>
-                <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar}/>
-                <input type="text" placeholder='Username' className='register-username' name="username" />
-                <input type="text" placeholder='Email' className='email' name="email" />
-                <input type="password" placeholder='Password' className='password' name="password" />
+                <input type="file" id="file" className="register-upload-avatar-field" onChange={handleAvatar} />
+                <input type="text" placeholder='Username' className='register-username' name="username" required />
+                <input type="text" placeholder='Email' className='email' name="email" required />
+                <input type="password" placeholder='Password' className='password' name="password" required />
                 <button className="sign-up" disabled={loading}>{loading ? "Loading" : "Sign Up"}</button>
             </form>
         </div>
