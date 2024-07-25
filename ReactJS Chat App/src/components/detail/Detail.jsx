@@ -13,9 +13,9 @@ import { PrivacyAndHelpModal } from './privacyAndHelpModal/PrivacyAndHelpModal';
 import { ChatSettingsModal } from './chatSettingsModal/ChatSettingsModal';
 
 export const Detail = () => {
-    const [chatSettings, setChatSettings] = useState(true);
-    const [privacyAndHelp, setPrivacyAndHelp] = useState(true);
-    const [sharedPhotos, setSharedPhotos] = useState(true);
+    const [chatSettings, setChatSettings] = useState(false);
+    const [privacyAndHelp, setPrivacyAndHelp] = useState(false);
+    const [sharedPhotos, setSharedPhotos] = useState(false);
     // const [sharedFiles, setSharedFiles] = useState(true);
 
     const [deleteUserModal, setDeleteUserModal] = useState(false);
@@ -55,6 +55,10 @@ export const Detail = () => {
 
     const onPrivacyAndHelpClick = () => {
         setPrivacyAndHelp(!privacyAndHelp);
+    };
+
+    const onSharedPhotosClick = () => {
+        setSharedPhotos(!sharedPhotos);
     };
 
     return (
@@ -97,7 +101,7 @@ export const Detail = () => {
                         <img
                             src={sharedPhotos ? "./arrowUp.png" : "./arrowDown.png"}
                             alt="arrowUp png" className='arrow-png'
-                            onClick={() => setSharedPhotos(!sharedPhotos)}
+                            onClick={onSharedPhotosClick}
                         />
                     </div>
 

@@ -9,6 +9,7 @@ import { db } from '../../configs/firebase';
 import { useChatStore } from '../../configs/chatStore';
 import { useUserStore } from '../../configs/userStore';
 import { upload } from '../../configs/upload';
+
 import { UserInfoModal } from './userInfoModal/UserInfoModal';
 
 export const Chat = () => {
@@ -20,6 +21,7 @@ export const Chat = () => {
         file: null,
         url: "",
     });
+    const [updateTime, setUpdateTime] = useState(Date.now());
 
     const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, } = useChatStore();
     const { currentUser } = useUserStore();
@@ -39,6 +41,14 @@ export const Chat = () => {
             unSub();
         };
     }, [chatId]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setUpdateTime(Date.now());
+        }, 60000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
     const handleImg = (e) => {
         if (e.target.files[0]) {
@@ -65,7 +75,7 @@ export const Chat = () => {
                 messages: arrayUnion({
                     senderId: currentUser.id,
                     textField: text,
-                    createdAt: new Date(),
+                    createdAt: new Date().toISOString(),
                     ...(imgUrl && { img: imgUrl }),
                 }),
             });
@@ -102,6 +112,13 @@ export const Chat = () => {
         setText("");
     };
 
+    const getTimeAgo = (timestamp) => {
+        const messageTime = new Date(timestamp);
+        const currentTime = new Date();
+        const timeDifference = Math.floor((currentTime - messageTime) / 60000);
+        return timeDifference > 0 ? `${timeDifference} min ago` : 'Just now';
+    };
+
     const onUserClick = () => {
         setEmojisMenu(!emojisMenu);
     };
@@ -131,8 +148,8 @@ export const Chat = () => {
                 </div>
 
                 <div className="heading-icons">
-                    <img src="./info.png" alt="edit icon" className="heading-info-icon" onClick={onInfoClick}/>
-                    {showUserInfoModal && <UserInfoModal onInfoClick={onInfoClick}/>}
+                    <img src="./info.png" alt="edit icon" className="heading-info-icon" onClick={onInfoClick} />
+                    {showUserInfoModal && <UserInfoModal onInfoClick={onInfoClick} />}
                 </div>
             </div>
 
@@ -144,7 +161,7 @@ export const Chat = () => {
                                 <img src={message.img} alt="image message" />
                             }
                             <p className={message.senderId === currentUser?.id ? "main-text-own" : "main-text"}>{message.textField}</p>
-                            <span className="main-date">2 min ago</span>
+                            <span className="main-date">{getTimeAgo(message.createdAt)}</span>
                         </div>
                     </div>
                 ))}
