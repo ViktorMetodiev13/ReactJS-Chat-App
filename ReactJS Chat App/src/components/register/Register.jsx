@@ -59,9 +59,19 @@ export const Register = () => {
 
             toast.success("Account created!");
 
-            window.location.href = '/';
+            if (avatar.file) {
+                window.location.href = '/';
+            };
         } catch (error) {
-            toast.error(error.message);
+            if (error.code === 'auth/email-already-in-use') {
+                toast.error("This email is already in use.");
+            } else if (error.code === 'auth/weak-password') {
+                toast.error("Password should be at least 6 characters.");
+            } else if (error.code === 'auth/invalid-email') {
+                toast.error("Your email should include @ and .com at the end.");
+            } else {
+                toast.error(error.message);
+            }
         } finally {
             setLoading(false);
         }

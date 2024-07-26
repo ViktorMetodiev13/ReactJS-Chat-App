@@ -23,7 +23,13 @@ export const Login = () => {
 
             toast.success("Signed in!");
         } catch (error) {
-            toast.error(error.message);
+            if (error.code === 'auth/invalid-email') {
+                toast.error("Please check your email.");
+            } else if (error.code === 'auth/invalid-credential') {
+                toast.error("Incorrect Password.");
+            } else {
+                toast.error(error.message);
+            }
         } finally {
             setLoading(false);
         };
@@ -32,10 +38,10 @@ export const Login = () => {
     return (
         <div className="login">
             <h2 className="login-title">Welcome back,</h2>
-            
+
             <form className="login-form" onSubmit={onLoginSubmit}>
-                <input type="text" placeholder='Email' className='email' name='email'/>
-                <input type="password" placeholder='Password' className='password' name='password'/>
+                <input type="text" placeholder='Email' className='email' name='email' />
+                <input type="password" placeholder='Password' className='password' name='password' />
                 <button className="sign-in" disabled={loading}>{loading ? "Loading" : "Sign In"}</button>
             </form>
         </div>
