@@ -95,7 +95,7 @@ export const Detail = () => {
                     </div>
                 </div>
 
-                {/* <div className="detail-option">
+                <div className="detail-option">
                     <div className="option-title">
                         <span>Shared photos</span>
                         <img
@@ -105,7 +105,7 @@ export const Detail = () => {
                         />
                     </div>
 
-                    {sharedPhotos ?
+                    {/* {sharedPhotos ?
                         <>
                             <div className="items">
                                 <div className="item">
@@ -124,7 +124,7 @@ export const Detail = () => {
                                     <img src="./download.png" alt="download png" className='download' />
                                 </div>
                             </div>
-                        </> : ""}
+                        </> : ""} */}
                 </div>
 
                 <div className="detail-option">
@@ -136,7 +136,7 @@ export const Detail = () => {
                             onClick={() => setSharedFiles(!sharedFiles)}
                         />
                     </div>
-                </div> */}
+                </div>
             </div>
 
             <footer className="buttons">
