@@ -26,6 +26,9 @@ Welcome to the ReactJS Chat App! This application is designed to provide a seaml
 
 ## Screenshots
 
+- **Inside Look**
 ![Screenshot of ReactJS Chat App](https://github.com/ViktorMetodiev13/ReactJS-Chat-App/blob/main/Project%20pictures/inside-look.png)
+
+- **Login and Register**
 ![Screenshot of ReactJS Chat App](https://github.com/ViktorMetodiev13/ReactJS-Chat-App/blob/main/Project%20pictures/outside-look.png)
 ![Screenshot of ReactJS Chat App](https://github.com/ViktorMetodiev13/ReactJS-Chat-App/blob/main/Project%20pictures/register-look.png)
