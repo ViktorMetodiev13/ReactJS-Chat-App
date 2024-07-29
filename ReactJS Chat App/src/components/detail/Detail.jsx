@@ -16,7 +16,7 @@ export const Detail = () => {
     const [chatSettings, setChatSettings] = useState(false);
     const [privacyAndHelp, setPrivacyAndHelp] = useState(false);
     const [sharedPhotos, setSharedPhotos] = useState(false);
-    // const [sharedFiles, setSharedFiles] = useState(true);
+    const [sharedFiles, setSharedFiles] = useState(true);
 
     const [deleteUserModal, setDeleteUserModal] = useState(false);
 
@@ -95,7 +95,7 @@ export const Detail = () => {
                     </div>
                 </div>
 
-                <div className="detail-option">
+                {/* <div className="detail-option">
                     <div className="option-title">
                         <span>Shared photos</span>
                         <img
@@ -126,7 +126,7 @@ export const Detail = () => {
                             </div>
                         </> : ""}
                 </div>
-{/* 
+
                 <div className="detail-option">
                     <div className="option-title">
                         <span>Shared files</span>

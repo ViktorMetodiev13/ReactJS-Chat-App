@@ -192,12 +192,12 @@ export const Chat = () => {
             </div>
 
             <div className="footer">
-                <div className="footer-icons">
+                {/* <div className="footer-icons">
                     <label htmlFor="file">
                         <img src="./img.png" alt="img icon" className="footer-img-icon" />
                     </label>
                     <input type='file' id='file' style={{ display: "none" }} onChange={handleImg} />
-                </div>
+                </div> */}
                 <input
                     type="text"
                     placeholder={(isCurrentUserBlocked || isReceiverBlocked) ? "This user is currently blocked" : "Type a message"}
