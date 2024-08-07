@@ -32,3 +32,8 @@ Welcome to the ReactJS Chat App! This application is designed to provide a seaml
 - **Login and Register**
 ![Screenshot of ReactJS Chat App](https://github.com/ViktorMetodiev13/ReactJS-Chat-App/blob/main/Project%20pictures/outside-look.png)
 ![Screenshot of ReactJS Chat App](https://github.com/ViktorMetodiev13/ReactJS-Chat-App/blob/main/Project%20pictures/register-look.png)
+
+## Deployment
+
+The app is currently hosted through GitHub Pages. You can access and try out the application by visiting the following URL:
+- [ReactJS Chat App](https://viktormetodiev13.github.io/ReactJS-Chat-App/)
