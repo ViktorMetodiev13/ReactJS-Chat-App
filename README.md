@@ -13,7 +13,7 @@ Welcome to the ReactJS Chat App! This application is designed to provide a seaml
 ## Tech Stack
 
 - **Frontend:**
-  - **ReactJS**: A JavaScript library for building user interfaces.
+  - **ReactJS with Vite**: A powerful combination for building fast and efficient user interfaces.
   - **CSS3**: For styling the application.
   - **Zustand**: A small, fast, and scalable state management solution for React.
   - **React Emoji Picker**: For integrating emoji selection in chat messages.
