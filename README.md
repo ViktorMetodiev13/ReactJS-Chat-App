@@ -20,7 +20,7 @@ Welcome to the ReactJS Chat App! This application is designed to provide a seaml
   - **React Toastify**: For showing toast notifications, such as errors and new message alerts.
 
 - **Backend:**
-  - **Firebase**: A comprehensive platform providing various backend services like authentication, real-time database, and hosting.
+  - **Firebase**: A comprehensive platform providing various backend services.
 
 ## Deployment
 
